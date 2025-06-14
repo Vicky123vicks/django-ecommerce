@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }} - VinKart</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+        .product-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        .product-container img {
+            width: 300px;
+            border-radius: 8px;
+        }
+        .product-details {
+            max-width: 600px;
+        }
+        .product-details h2 {
+            margin-bottom: 10px;
+        }
+        .product-details p {
+            font-size: 18px;
+        }
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+            color: #0066cc;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>{{ product.name }}</h1>
+
+    <div class="product-container">
+        <img src="{{ product.image }}" alt="{{ product.name }}">
+        <div class="product-details">
+            <h2>₹{{ product.price }}</h2>
+            <p>{{ product.description }}</p>
+            <button>Add to Cart</button>
+        </div>
+    </div>
+
+    <a href="{% url 'ecommerce' %}" class="back-link">← Back to Home</a>
+
+</body>
+</html>
