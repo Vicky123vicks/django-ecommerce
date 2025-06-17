@@ -1,41 +1,61 @@
+{% load static %}
+<img src="{% static product.image %}" alt="{{ product.name }}">
+
+
+
+
+<!DOCTYPE html>
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Your Cart - VinKart</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        .cart-item {
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-        }
-        .cart-item img {
-            width: 100px;
-            margin-right: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/theme.js' %}"></script>
 </head>
 <body>
 
-<h1>Your Cart</h1>
+    <!-- Website Title -->
+    <div class="site-title">
+        <h1>VinKart</h1>
+    </div>
+
+    <!-- Navbar Shortcut -->
+    <div class="navbar">
+        <a href="{% url 'ecommerce' %}" style="color:blue;">← Back to Shopping</a>
+        <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+    </div>
+
+    <h2 class="section-title">Your Cart</h2>
 
 {% if cart %}
+  <div class="cart-container">
     {% for item in cart %}
-        <div class="cart-item">
-            <img src="{{ item.image }}" alt="{{ item.name }}">
-            <div>
-                <h3>{{ item.name }}</h3>
-                <p>Price: ₹{{ item.price }}</p>
-            </div>
-        </div>
-    {% endfor %}
-{% else %}
-    <p>Your cart is empty.</p>
-{% endif %}
+      <div class="cart-card">
+        <img src="{% static item.image %}" alt="{{ item.name }}" class="cart-image">
 
-<a href="{% url 'ecommerce' %}">← Back to Shopping</a>
+        <div class="cart-details">
+          <h3 class="product-title">{{ item.name }}</h3>
+          <p class="product-price">Price: ₹{{ item.price }}</p>
+          <p class="product-quantity">Quantity: {{ item.quantity }}</p>
+          <p class="product-total">Total: ₹{{ item.total }}</p>
+
+          <form method="POST" action="{% url 'remove_from_cart' item.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-remove">Remove</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="cart-summary-box">
+    <h3>Cart Total: ₹{{ total }}</h3>
+  </div>
+{% else %}
+  <p class="empty-cart-msg">Your cart is empty.</p>
+{% endif %}
 
 </body>
 </html>

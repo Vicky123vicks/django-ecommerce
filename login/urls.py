@@ -1,12 +1,19 @@
+# login/urls.py
 from django.urls import path
-from .views import login_view, ecommerce_view, logout_view, add_to_cart, cart_view, product_detail_view
+from . import views
 
 urlpatterns = [
-    path('login/', login_view, name='login'),
-    path('ecommerce/', ecommerce_view, name='ecommerce'),
-    path('logout/', logout_view, name='logout'),
-    path('product/<int:product_id>/', product_detail_view, name='product_detail'),
-    path('add-to-cart/<int:product_id>/', add_to_cart, name='add_to_cart'),
-    path('cart/', cart_view, name='cart'),
+    path('', views.login_view, name='login'),
+    path('login/', views.login_view, name='login'), # for /login/
+    path('ecommerce/', views.ecommerce_view, name='ecommerce'),
+    path('product/<int:product_id>/', views.product_detail_view, name='product_detail'),
+    path('logout/', views.logout_view, name='logout'),
+    path('cart/', views.cart_view, name='cart'),
+    path('add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path('remove/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),  # ✅ ADD THIS LINE
+    path('register/', views.register_view, name='register')
 ]
+
+
+
 

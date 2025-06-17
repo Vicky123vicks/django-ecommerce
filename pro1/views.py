@@ -1,4 +1,8 @@
-from django.http import HttpResponse
+# pro1/urls.py
+from django.contrib import admin
+from django.urls import path, include
 
-def login_view(request):
-    return HttpResponse("Hello, welcome to your Django e-commerce site!")
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('login.urls')),  # include your app URLs
+]
