@@ -11,10 +11,20 @@
 
   <meta charset="UTF-8" />
   <title>VinKart Login</title>
+  <style>
+    .login-logo {
+  display: block;
+  margin: 0 auto 20px auto;
+  width: 250px;
+  height: 150px;
+}
+
+</style>
  
 </head>
 <body>
  <div class="login-container">
+   <img src="{% static 'images/logo vinkart.png' %}" alt="Vinkart Logo" class="login-logo">
     <h2>SHOP WITH Vinkart</h2>
     
     {% if error %}

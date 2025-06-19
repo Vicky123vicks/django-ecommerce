@@ -1,9 +1,9 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <script src="{% static 'js/theme.js' %}"></script>
 
-<a href="{% url 'ecommerce' %}">
-<img src="{% static product.image %}" alt="{{ product.name }}">
+<a href="{% url 'ecommerce' %}"> {% endcomment %}
+{% comment %} <img src="{% static 'images/logo vinkart.png' %}" alt="VinKart Logo" class="logo-top"> {% endcomment %}
 
 
 <!DOCTYPE html>
@@ -15,44 +15,58 @@
     <script src="{% static 'js/theme.js' %}"></script>
 </head>
 <body>
+  <header class="main-header">
+  <div class="header-left">
+    <img src="{% static 'images/log vinkart.png' %}" alt="Vinkart Logo" class="logo-top">
+    <span class="site-title-text">VinKart</span>
+  </div>
+</header>
+
+
+    <main class="content">
+        <h1>Welcome to Vinkart!</h1>
+        <!-- You can add product cards or welcome message here -->
+    </main>
 
     <!-- Website Title -->
-    <div class="site-title">
+    {% comment %} <div class="site-title">
         <h1>VinKart</h1>
-    </div>
+    </div> {% endcomment %}
 
     <!-- Navbar -->
     <!-- ✅ Updated Navbar -->
 <div class="navbar">
-    <div class="nav-links">
-        <a href="{% url 'ecommerce' %}">Home</a>
+  <!-- LEFT SECTION -->
+  <div class="nav-left">
+    {% comment %} <img src="{% static 'images/logo.png' %}" class="logo-top" alt="Vinkart Logo"> {% endcomment %}
+    <a href="{% url 'ecommerce' %}">Home</a>
 
-        <div class="dropdown">
-    <a href="#">Categories</a>
-    <ul class="dropdown-content">
-        <li><a href="?category=all{% if search_query %}&query={{ search_query }}{% endif %}">All</a></li>
-        <li><a href="?category=Electronics{% if search_query %}&query={{ search_query }}{% endif %}">Electronics</a></li>
-        <li><a href="?category=Furniture{% if search_query %}&query={{ search_query }}{% endif %}">Furniture</a></li>
-        <li><a href="?category=Shoes - Casual{% if search_query %}&query={{ search_query }}{% endif %}">Shoes - Casual</a></li>
-        <li><a href="?category=Shoes - Formal{% if search_query %}&query={{ search_query }}{% endif %}">Shoes - Formal</a></li>
-        <li><a href="?category=Dress - Men{% if search_query %}&query={{ search_query }}{% endif %}">Dress - Men</a></li>
-        <li><a href="?category=Dress - Women{% if search_query %}&query={{ search_query }}{% endif %}">Dress - Women</a></li>
-        <li><a href="?category=Household Items{% if search_query %}&query={{ search_query }}{% endif %}">Household Items</a></li>
-    </ul>
-</div>
-
-
-        <a href="#">Account</a>
-        <a href="{% url 'cart' %}">Cart ({{ cart_count }})</a>
-
-        <!-- 🌙 Light/Dark Theme Toggle -->
-        <label class="theme-switch">
-            <input type="checkbox" id="theme-toggle" onclick="toggleTheme()">
-            <span class="slider"></span>
-        </label>
-
-        <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+    <div class="dropdown">
+      <button class="dropbtn">Categories</button>
+      <div class="dropdown-content">
+        <a href="?category=all{% if search_query %}&query={{ search_query }}{% endif %}">All</a>
+        <a href="?category=Electronics{% if search_query %}&query={{ search_query }}{% endif %}">Electronics</a>
+        <a href="?category=Furniture{% if search_query %}&query={{ search_query }}{% endif %}">Furniture</a>
+        <a href="?category=Shoes - Casual{% if search_query %}&query={{ search_query }}{% endif %}">Shoes - Casual</a>
+        <a href="?category=Shoes - Formal{% if search_query %}&query={{ search_query }}{% endif %}">Shoes - Formal</a>
+        <a href="?category=Dress - Men{% if search_query %}&query={{ search_query }}{% endif %}">Dress - Men</a>
+        <a href="?category=Dress - Women{% if search_query %}&query={{ search_query }}{% endif %}">Dress - Women</a>
+        <a href="?category=Household Items{% if search_query %}&query={{ search_query }}{% endif %}">Household Items</a>
+      </div>
     </div>
+
+    <a href="#">Account</a>
+    <a href="{% url 'cart' %}">Cart ({{ cart_count }})</a>
+  </div>
+
+  <!-- RIGHT SECTION -->
+  <div class="nav-right">
+    <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+    <label class="theme-switch">
+      <input type="checkbox" id="theme-toggle" onclick="toggleTheme()">
+      <span class="slider"></span>
+    </label>
+  </div>
 </div>
 
 
@@ -104,19 +118,47 @@
 
 
     <!-- Dark mode script -->
-    <script>
-    function toggleTheme() {
-        document.body.classList.toggle("dark-mode");
-        localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
-    }
+   <script>
+  const toggleSwitch = document.getElementById("theme-toggle");
 
-    window.onload = function () {
-        if (localStorage.getItem("theme") === "dark") {
-            document.body.classList.add("dark-mode");
-            document.getElementById("theme-toggle").checked = true;
-        }
-    };
+  // Function to enable dark mode
+  function enableDarkMode() {
+    document.body.classList.add("dark-mode");
+    localStorage.setItem("theme", "dark");
+  }
+
+  // Function to disable dark mode
+  function disableDarkMode() {
+    document.body.classList.remove("dark-mode");
+    localStorage.setItem("theme", "light");
+  }
+
+  // Check the current theme from localStorage
+  function loadTheme() {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      enableDarkMode();
+      toggleSwitch.checked = true;
+    } else {
+      disableDarkMode();
+      toggleSwitch.checked = false;
+    }
+  }
+
+  // Toggle theme when switch is clicked
+  toggleSwitch.addEventListener("change", function () {
+    if (this.checked) {
+      enableDarkMode();
+    } else {
+      disableDarkMode();
+    }
+  });
+
+  // Load the saved theme on page load
+  window.onload = loadTheme;
 </script>
+
+
 
 </body>
 </html>
